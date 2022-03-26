@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20220325112014_initial.cs" />
+    <Compile Remove="Migrations\20220325112014_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220325112504_initial.cs" />
+    <Compile Remove="Migrations\20220325112504_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220325113058_initial.cs" />
+    <Compile Remove="Migrations\20220325113058_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220325113446_initial.cs" />
+    <Compile Remove="Migrations\20220325113446_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220325113818_initial.cs" />
+    <Compile Remove="Migrations\20220325113818_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220325114223_initial.cs" />
+    <Compile Remove="Migrations\20220325114223_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Payment.Domain\Payment.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
