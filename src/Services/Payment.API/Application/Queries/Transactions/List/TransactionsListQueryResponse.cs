@@ -7,7 +7,6 @@ namespace Payment.API.Application.Queries.Transactions.List
 {
     public class TransactionsListQueryResponse
     {
-        //comment
         public Guid PaymentId { get; set; }
 
         public decimal Amount { get; set; }
