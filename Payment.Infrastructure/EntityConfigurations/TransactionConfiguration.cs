@@ -11,6 +11,7 @@ namespace Payment.Infrastructure.EntityConfigurations
             Schema = schema;
         }
 
+        // comment
         public string Schema { get; }
 
         public void Configure(EntityTypeBuilder<Transaction> builder)
