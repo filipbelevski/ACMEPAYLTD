@@ -26,7 +26,7 @@ namespace Payment.API.Controllers
             [FromQuery] string searchString,
             [FromQuery] DateTime? from,
             [FromQuery] DateTime? to,
-            [FromQuery] TransactionStatus status
+            [FromQuery] TransactionStatus? status
             )
         {
             TransactionsListQuery query = new TransactionsListQuery

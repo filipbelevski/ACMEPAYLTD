@@ -1,5 +1,6 @@
 ﻿using Payment.Domain.Model.Transaction.Enum;
 using System;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Payment.API.Application.Queries.Transactions.List
@@ -18,7 +19,7 @@ namespace Payment.API.Application.Queries.Transactions.List
 
         public string HolderName { get; set; }
 
-        public string OrderReference { get; set; }
+        public string OrderReference { get ; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransactionStatus Status { get; set; }

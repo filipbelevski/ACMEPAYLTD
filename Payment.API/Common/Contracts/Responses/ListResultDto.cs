@@ -4,7 +4,7 @@ namespace Payment.API.Common.Contracts.Responses
 {
     public class ListResultDto<T>
     {
-        public IEnumerable<T> List { get; set; }
+        public List<T> List { get; set; }
 
         public int TotalCount { get; set; }
 
