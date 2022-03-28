@@ -1,9 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs/operators';
+import { SnackbarService } from 'src/modules/shared/snackbar/snackbar.service';
 import { ListResponseDto, TransactionResponse } from '../models/models';
 import { TransactionsService } from '../transactions.service';
 
@@ -33,7 +33,7 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private transactionService: TransactionsService, private snackBar: MatSnackBar) { }
+  constructor(private transactionService: TransactionsService, private snackBar: SnackbarService) { }
 
   ngOnInit(): void {
     this.getTransactions();
@@ -66,13 +66,27 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
         take(1)
       )
       .subscribe({
-        next: result => this.openSnackBar(`Voided transaction with ID:${result.paymentId}`),
+        next: result => {
+          this.dataSource.data.filter(x => x.paymentId === result.id)[0].status = 'Voided';
+          this.snackBar.openSnackBar(`Voided transaction with ID:${result.id}`);
+
+      },
         error: error => console.log(error)
       })
   }
 
   captureTransaction(paymentId: string, orderReference: string){
-    this.transactionService.capturePayment(paymentId, orderReference);
+    this.transactionService.capturePayment(paymentId, orderReference).pipe(
+      take(1)
+    )
+    .subscribe({
+      next: result => {
+        this.dataSource.data.filter(x => x.paymentId === result.id)[0].status = 'Captured';
+        this.snackBar.openSnackBar(`Captured transaction with ID:${result.id}`);
+
+    },
+      error: error => console.log(error)
+    })
   }
 
   public search = (value: string) => {
@@ -85,13 +99,4 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
     this.page = event.pageIndex + 1;
     this.getTransactions();
   }
-
-  openSnackBar(message: string){
-    this.snackBar.open(message, '', {
-      duration: 2000,
-      verticalPosition: 'top',
-      panelClass: ['snackbar-success']
-    })
-  }
-
 }

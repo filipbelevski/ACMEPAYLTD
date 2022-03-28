@@ -16,12 +16,21 @@ export interface TransactionResponse{
   status: string
 }
 
-export interface VoidModel {
+export interface OrderReferenceBodyModel{
+  orderReference: string
+}
+
+export interface CaptureRequest{
   paymentId: string,
+  orderReference: string
+}
+
+export interface VoidModel {
+  id: string,
   status: number
 }
 
 export interface  CaptureModel{
-  paymentId: string,
+  id: string,
   status: number
 }

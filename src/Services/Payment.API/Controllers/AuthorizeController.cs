@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Payment.API.Application.Commands.Authorize;
 using Payment.API.Application.Commands.Capture;
 using Payment.API.Application.Commands.Void;
+using Payment.API.Common.Contracts.Contracts;
 using System;
 using System.Threading.Tasks;
 
@@ -35,12 +36,12 @@ namespace Payment.API.Controllers
         [HttpPost("{id:guid}/voids")]
         public async Task<ActionResult<VoidResponse>> VoidTransaction(
             [FromRoute] Guid id,
-            [FromQuery] string orderReference)
+            [FromBody] OrderReferenceDto orderReference)
         {
             VoidCommand command = new VoidCommand
             {
                 Id = id,
-                OrderReference = orderReference
+                OrderReference = orderReference.OrderReference
             };
 
             return await mediator.Send(command);
@@ -49,9 +50,9 @@ namespace Payment.API.Controllers
         [HttpPost("{id:guid}/capture")]
         public async Task<ActionResult<CaptureResponse>> CaptureTransaction(
             [FromRoute] Guid id,
-            [FromQuery] string orderReference)
+            [FromBody] OrderReferenceDto orderReference)
         {
-            CaptureCommand command = new CaptureCommand(id, orderReference);
+            CaptureCommand command = new CaptureCommand(id, orderReference.OrderReference);
 
             return await mediator.Send(command);
         }

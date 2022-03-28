@@ -47,7 +47,7 @@
     <ng-container matColumnDef="capture">
       <th mat-header-cell *matHeaderCellDef> Capture </th>
       <td mat-cell *matCellDef="let element">
-        <button *ngIf="element.status === 'Authorized'" mat-icon-button color="warn" (click)="captureTransaction(element.id, element.paymentId)">
+        <button *ngIf="element.status === 'Authorized'" mat-icon-button color="warn" (click)="captureTransaction(element.paymentId, element.orderReference)">
             <mat-icon class="mat-18">update</mat-icon>
         </button>
       </td>

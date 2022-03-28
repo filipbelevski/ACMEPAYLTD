@@ -1,14 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { map, Observable, tap } from 'rxjs';
-import { CaptureModel, ListResponseDto, TransactionResponse, VoidModel } from './models/models';
+import { CaptureModel, ListResponseDto, OrderReferenceBodyModel, TransactionResponse, VoidModel } from './models/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionsService {
 
-  private transactionsUrl: string = 'https://localhost:44307/api/transactions'
+  private baseUrl: string = 'https://localhost:44307/api/';
   constructor(private http: HttpClient) { }
 
   private options = {
@@ -16,9 +17,9 @@ export class TransactionsService {
     };
 
     getPayments(page: number, pageSize: number, from?: string, to?:string, status?: number, searchString?: string): Observable<ListResponseDto<TransactionResponse>>{
-      let url = this.transactionsUrl;
+      let url = this.baseUrl;
 
-      url += `?page=${page}&pageSize=${pageSize}`;
+      url += `transactions?page=${page}&pageSize=${pageSize}`;
 
       if(from){
         url += `&from=${from}`
@@ -37,19 +38,23 @@ export class TransactionsService {
       return this.http.get<ListResponseDto<TransactionResponse>>(url, this.options);
     }
 
-    voidPayment(paymentId:string, orderReference:string):Observable<VoidModel>{
-      let url = `${this.transactionsUrl}/${paymentId}/voids`;
+    voidPayment(paymentId:string, orderReference : string):Observable<VoidModel>{
+      let url = `${this.baseUrl}authorize/${paymentId}/voids`;
+      let body = {
+        orderReference: orderReference
+      }
 
-      return this.http.post(url, orderReference).pipe<VoidModel>(tap((response: any) => {
-        return response;
-      }));
+      return this.http.post<VoidModel>(url, body, this.options);
     }
 
     capturePayment(paymentId:string, orderReference:string){
-      let url = `${this.transactionsUrl}/${paymentId}/capture`;
+      let url = `${this.baseUrl}authorize/${paymentId}/capture`;
 
+      let body = {
+        orderReference: orderReference
+      }
 
-      return this.http.post(url, orderReference).pipe<CaptureModel>(tap((response: any) => {
+      return this.http.post(url, body).pipe<CaptureModel>(tap((response: any) => {
         return response;
       }));
     }
