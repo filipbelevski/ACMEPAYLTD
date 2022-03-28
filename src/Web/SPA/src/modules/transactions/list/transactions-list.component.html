@@ -1,6 +1,6 @@
 <div class="filter">
   <mat-form-field>
-    <input matInput type="text" (keyup)="doFilter($any($event.target).value)" placeholder="Search">
+    <input matInput type="text" (keyup)="search($any($event.target).value)" placeholder="Search">
   </mat-form-field>
 </div>
 <table mat-table [dataSource]="dataSource">

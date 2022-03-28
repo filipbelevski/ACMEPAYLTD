@@ -75,7 +75,7 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
     this.transactionService.capturePayment(paymentId, orderReference);
   }
 
-  public doFilter = (value: string) => {
+  public search = (value: string) => {
     this.searchString = value;
     this.getTransactions();
   }
