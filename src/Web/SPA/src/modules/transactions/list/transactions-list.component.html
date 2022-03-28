@@ -1,0 +1,134 @@
+<div class="filter">
+  <mat-form-field>
+    <input matInput type="text" (keyup)="doFilter($any($event.target).value)" placeholder="Search">
+  </mat-form-field>
+</div>
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="paymentId">
+    <th mat-header-cell *matHeaderCellDef> Payment ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.paymentId}} </td>
+  </ng-container>
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+  </ng-container>
+  <ng-container matColumnDef="currency">
+    <th mat-header-cell *matHeaderCellDef> Currency </th>
+    <td mat-cell *matCellDef="let element"> {{element.currency}} </td>
+  </ng-container>
+  <ng-container matColumnDef="cardholderNumber">
+    <th mat-header-cell *matHeaderCellDef> Cardholder Number </th>
+    <td mat-cell *matCellDef="let element">{{element.cardholderNumber}}</td>
+  </ng-container>
+  <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef> Created On </th>
+      <td mat-cell *matCellDef="let element">{{element.createdOn}}</td>
+    </ng-container>
+  <ng-container matColumnDef="holderName">
+      <th mat-header-cell *matHeaderCellDef> Holder Name</th>
+      <td mat-cell *matCellDef="let element">{{element.holderName}}</td>
+    </ng-container>
+  <ng-container matColumnDef="orderReference">
+      <th mat-header-cell *matHeaderCellDef> Order reference </th>
+      <td mat-cell *matCellDef="let element">{{element.orderReference}}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      </ng-container>
+    <ng-container matColumnDef="void">
+      <th mat-header-cell *matHeaderCellDef> Void </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status === 'Authorized'" mat-icon-button color="warn" (click)="voidTransaction(element.paymentId, element.orderReference)">
+            <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="capture">
+      <th mat-header-cell *matHeaderCellDef> Capture </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.status === 'Authorized'" mat-icon-button color="warn" (click)="captureTransaction(element.id, element.paymentId)">
+            <mat-icon class="mat-18">update</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator #paginator
+  [pageSize]="pageSize"
+  [pageIndex]="page - 1"
+  [length]="totalCount"
+  [pageSizeOptions]="[2, 5, 10, 20, 50]"
+  (page)="pageChanged($event)"
+>
+</mat-paginator>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1 id="tableLabel">Payment Transactions</h1>
+
+<p *ngIf="!transactionResult"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="transactionResult.list as transactions">
+  <thead>
+    <tr>
+      <th>PaymentId</th>
+      <th>Amount</th>
+      <th>Currency</th>
+      <th>CardHolder Number</th>
+      <th>Holder Name</th>
+      <th>Order Reference Number</th>
+      <th>Status</th>
+      <th>Void Transaction</th>
+      <th>Capture Transaction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions | paginate: {itemsPerPage: pageSize, currentPage: page, totalItems: transactionResult.totalCount}">
+      <td>{{ transaction.paymentId }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.currency }}</td>
+      <td>{{ transaction.cardholderNumber }}</td>
+      <td>{{ transaction.holderName }}</td>
+      <td>{{ transaction.orderReference }}</td>
+      <td>{{ transaction.status }}</td>
+      <td>
+      <button class="esh-pager-item esh-pager-item--navigable"
+        id="Void"
+        [ngClass]="{'is-disabled': transaction.status == 'Captured'}"
+        (click)="voidTransaction(transaction.paymentId, transaction.orderReference)"
+        aria-label="Void">
+         Void
+      </button>
+     </td>
+      <td>
+      <button class="esh-pager-item esh-pager-item--navigable"
+        id="Capture"
+        [ngClass]="{'is-disabled': transaction.status == 'Voided'}"
+        (click)="captureTransaction(transaction.paymentId, transaction.orderReference)"
+        aria-label="Capture">
+         Capture
+      </button>
+    </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <pagination-controls (pageChange)="page = $event; getTransactions()"></pagination-controls>
+  </tfoot>
+</table> -->
