@@ -1,7 +1,21 @@
 <div class="filter">
-  <mat-form-field>
-    <input matInput type="text" (keyup)="search($any($event.target).value)" placeholder="Search">
+  <div style="margin-right: 20px">
+    <mat-form-field>
+      <input matInput type="text" (keyup)="search($any($event.target).value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)="statusChange($event.value)">
+      <mat-option>None</mat-option>
+      <mat-option value="Authorized">Authorized</mat-option>
+      <mat-option value="Voided">Voided</mat-option>
+      <mat-option value="Captured">Captured</mat-option>
+    </mat-select>
   </mat-form-field>
+  <div>
+
+  </div>
 </div>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="paymentId">

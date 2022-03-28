@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SnackbarService } from './snackbar/snackbar.service';
-import { MatDialogModule } from '@angular/material/dialog';
-
-
-
 
 @NgModule({
   declarations: [

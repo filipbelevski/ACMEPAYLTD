@@ -20,6 +20,8 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
   public page: number = 1;
   public pageSize: number = 5;
   public totalCount!: number;
+  public selected?: string;
+
   public from? : string;
   public to?: string;
   public status?: number;
@@ -97,6 +99,11 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
   public pageChanged(event: PageEvent){
     this.pageSize = event.pageSize;
     this.page = event.pageIndex + 1;
+    this.getTransactions();
+  }
+
+  public statusChange(value: any){
+    this.status = value;
     this.getTransactions();
   }
 }
