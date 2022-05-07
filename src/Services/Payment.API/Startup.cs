@@ -65,9 +65,9 @@ namespace Payment.API
 
             services.AddMvc();
 
+            services.AddTransient<ExceptionHandlingMiddleware>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssemblyContaining<AuthorizeCommandValidator>();
-            services.AddTransient<ExceptionHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +83,8 @@ namespace Payment.API
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -94,7 +96,6 @@ namespace Payment.API
                 endpoints.MapControllers();
             });
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
     }
 }
